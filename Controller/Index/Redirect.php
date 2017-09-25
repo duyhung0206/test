@@ -20,7 +20,6 @@ class Redirect extends \Magento\Framework\App\Action\Action
 
     public function execute()
     {
-        ini_set("soap.wsdl_cache_enabled", WSDL_CACHE_NONE);
         return $this->resultPageFactory->create();
     }
 }

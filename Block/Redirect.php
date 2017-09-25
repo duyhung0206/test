@@ -1,6 +1,8 @@
 <?php
 
 namespace Magestore\WebposVantiv\Block;
+use Braintree\Exception;
+
 class Redirect extends \Magento\Framework\View\Element\Template
 {
     protected $_quote = null;
@@ -8,7 +10,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
     protected $_checkoutSession;
     protected $_mercuryhosted;
     protected $_quoteF;
-    protected $trySoap = 0;
+    protected $_faild;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $content,
@@ -29,6 +31,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
         $this->_encryptor = $encryptor;
         $this->_quoteF= $quoteFactory;
         $this->_request = $actionContent->getRequest();
+        $this->_faild = 0;
     }
 
     public function getQuote()
@@ -41,7 +44,7 @@ class Redirect extends \Magento\Framework\View\Element\Template
 
     public function initializePaymentRequest()
     {
-
+        $this->_faild++;
         $quote = $this->getQuote();
         if($quote->getId() == null){
             $quoteId = $this->_request->getParam('quoteId');
@@ -59,7 +62,6 @@ class Redirect extends \Magento\Framework\View\Element\Template
             'Invoice' => $spaeb016['invoice'],
             'TotalAmount' => $spaeb016['grandtotal_amount'],
             'TaxAmount' => '0.00',
-            'OperatorID' => 'Test',
             'Invoice' => $spaeb016['tax_amount'],
             'AVSAddress' => $spaeb016['address1'][0],
             'AVSZip' => $spaeb016['zip'],
@@ -87,13 +89,14 @@ class Redirect extends \Magento\Framework\View\Element\Template
         }
         $sp55df0a = '';
         if ($spaeb016['testmode'] == 'TRUE') {
-            $sp55102f = 'https://hc.mercurycert.net/hcws/hcservice.asmx?WSDL';
+            $sp55102f = 'https://hc.mercurycert.net/hcws/hcservice.asmx?wsdl';
+            $spc679c6['OperatorID'] = 'Test';
             $spac789b = stream_context_create(array('ssl' => array('verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true)));
-            $sp99ec52 = array('trace' => 1, 'stream_context' => $spac789b);
+            $sp99ec52 = array('trace' => true, 'stream_context' => $spac789b);
         } else {
-            $sp55102f = 'https://hc.mercurypay.com/hcws/hcservice.asmx?WSDL';
+            $sp55102f = 'https://hc.mercurypay.com/hcws/hcservice.asmx?wsdl';
             $spac789b = null;
-            $sp99ec52 = array('trace' => 1);
+            $sp99ec52 = array('trace' => true);
         }
         try {
             $spdd0fab = new \SoapClient($sp55102f, $sp99ec52);
@@ -109,9 +112,10 @@ class Redirect extends \Magento\Framework\View\Element\Template
 ' . print_r($spdd0fab->__getlastResponse(), 1);
                 die;
             }
-        } catch (SoapFault $sp5e9e58) {
-            $this->initializePaymentRequest();
-
+        } catch (\SoapFault $sp5e9e58) {
+            if($this->_faild != 2){
+                $this->initializePaymentRequest();
+            }
             $spbd95c8 = '';
             if ($sp5e9e58->faultcode == 'HTTP') {
                 $spbd95c8 = 'Invalid Credentials';
@@ -125,9 +129,10 @@ class Redirect extends \Magento\Framework\View\Element\Template
             echo 'InitializePayment RESPONSE' . '
 ' . print_r($spdd0fab->__getlastResponse(), 1);
             die;
-        } catch (Exception $sp5e9e58) {
-            $this->initializePaymentRequest();
-
+        } catch (\Exception $sp5e9e58) {
+            if($this->_faild != 2){
+                $this->initializePaymentRequest();
+            }
             $spbd95c8 = $sp5e9e58->getMessage();
             if (empty($spbd95c8)) {
                 $spbd95c8 = 'Unknown error';
