@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+  ~ * Copyright © 2016 Magestore. All rights reserved.
+  ~ * See COPYING.txt for license details.
+  ~
+  -->
+
+<page layout="webpos" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" >
+    <head>
+        <script src="requirejs/require.js"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Magestore\WebposVantiv\Block\Success" name="webpos_vantiv_integration_success" template="Magestore_WebposVantiv::success.phtml" cacheable="false"/>
+        </referenceContainer>
+    </body>
+</page>

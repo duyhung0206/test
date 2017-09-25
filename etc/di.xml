@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+
+    <!--show in config payment webpos-->
+    <preference for="Magestore\Webpos\Model\Source\Adminhtml\Payment" type="Magestore\WebposVantiv\Model\Source\Adminhtml\Payment" />
+
+    <!--add vantiv payment to payment allow in webpos-->
+    <preference for="Magestore\Webpos\Model\Cart\Create" type="Magestore\WebposVantiv\Model\Cart\Create"/>
+
+    <type name="Magento\Sales\Model\Order\Payment\Info">
+        <plugin name="vantiv_info_webpos" type="\Magestore\WebposVantiv\Plugin\Sales\Order\Payment\Info"/>
+    </type>
+</config>

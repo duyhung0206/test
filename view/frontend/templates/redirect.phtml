@@ -1,0 +1,21 @@
+<h1>Processing payment...</h1>
+<script>window.checkout.autocomplete = 1;</script>
+<?php
+$total_items = 0;
+$checkoutfields = $block->initializePaymentRequest();
+// echo '<pre>' . print_r($checkoutfields, 1) . '</pre>';exit;
+if (!isset($checkoutfields['address1']) || empty($checkoutfields['address1'])) {
+    echo '<p>Your cart is empty. Please checkout once again. Thank you.</p>';
+
+} else {
+    ?>
+    <p>Please wait while we redirect you to the bank page to complete the payment. Thank you.</p>
+    <form action="<?php echo $block->getMercuryhostedUrl(); ?>" method="POST" id="mercuryhosted_standard_checkout">
+        <input type="hidden" name="PaymentID" value="<?php echo $checkoutfields['PaymentID']; ?>" />
+        <input type="hidden" name="ReturnMethod" value="POST" />
+    </form>
+    <script type="text/javascript">setTimeout(function() {document.getElementById("mercuryhosted_standard_checkout").submit();},1000);</script>
+    <?php
+}
+
+?>

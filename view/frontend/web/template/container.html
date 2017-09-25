@@ -1,0 +1,10 @@
+<div class="content" data-bind="visible:visible">
+    <button class="close_button" data-bind="i18n:'Close', click: close"></button>
+    <div class="indicator" data-bind="visible:loading()">
+        <h4 class='title' data-bind="i18n:'Checking information'"></h4>
+        <h4 class='title' data-bind="i18n:'Processing'"></h4>
+        <span class="loader"></span>
+    </div>
+    <div id="vantiv-iframe" class="instruction">
+    </div>
+</div>

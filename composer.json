@@ -1,0 +1,21 @@
+{
+    "name": "magestore/module-webposvantiv",
+    "description": "Integrate vantiv with webpos",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Mage2Gen",
+            "email": "info@mage2gen.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Magestore\\WebposVantiv\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

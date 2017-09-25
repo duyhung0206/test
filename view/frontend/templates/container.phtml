@@ -1,0 +1,41 @@
+<div id="webpos_vantiv_integration_container" class="hide" data-bind="scope:'webpos_vantiv_integration'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<div id="webpos_vantiv_integration_overlay" class="hide"></div>
+<script type="text/x-magento-init">
+    {
+        "#webpos_vantiv_integration_container": {
+            "Magento_Ui/js/core/app": {
+                "components" : {
+                    "webpos_vantiv_integration": {
+                        "component": "Magestore_WebposVantiv/js/view/container",
+                         "displayArea": "webpos_vantiv_integration"
+                    }
+                }
+            }
+        }
+    }
+</script>
+<script>
+    window.closePaymentVantiv = function(){
+        require(
+        [
+            'Magestore_WebposVantiv/js/view/container'
+        ], function (container) {
+            container = container();
+            container.close();
+        });
+    }
+
+    window.successPaymentVantiv = function(dataOrder){
+        require(
+            [
+                'Magestore_Webpos/js/model/checkout/checkout',
+                'Magestore_Webpos/js/model/event-manager'
+            ], function (checkoutModel, Event) {
+                Event.dispatch('close_vantiv_integration', '');
+//                checkoutModel = checkoutModel();
+                checkoutModel.placeOrderSuccess(dataOrder);
+            });
+    }
+</script>

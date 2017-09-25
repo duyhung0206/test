@@ -1,0 +1,45 @@
+.icon-iconPOS-payment-vantiv {
+    background: url(../images/vantiv_logo.jpg) no-repeat 98% center;
+    height: 70px;
+    background-size: cover;
+}
+
+#webpos_vantiv_integration_container{
+    position: fixed;
+    z-index: 1100;
+    min-height: 100px;
+    min-width: 100px;
+    width: 70vw;
+    height: 90vh;
+    left: 50%;
+    margin-left: -33vw;
+    top: 20px;
+    background: #fff;
+}
+
+#webpos_vantiv_integration_overlay{
+    position: fixed;
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: #000;
+    opacity: 0.7;
+}
+
+#webpos_vantiv_integration_container .content,
+#webpos_vantiv_integration_container .indicator,
+#webpos_vantiv_integration_container .instruction{
+    width:100%;
+    height: 100%;
+}
+
+#webpos_vantiv_integration_container .close_button{
+    float: right;
+    margin: 5px;
+    padding: 5px;
+    line-height: 20px;
+    border: none;
+    background: #fff;
+}
