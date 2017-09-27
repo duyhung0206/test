@@ -204,68 +204,15 @@ define(
                 var self = this;
                 $('#vantiv-iframe').empty();
                 var quoteParams = CartModel.getQuoteInitParams();
+                var urlLocation = window.location.href.split("webpos")[0];
                 // $.mage.redirect('http://127.0.0.1/vantiv/webposvantiv/index/redirect?guestemail=null&quoteId='+quoteParams.quote_id);
-                var frame = $('<iframe src="http://127.0.0.1/vantiv/webposvantiv/index/redirect?guestemail=null&quoteId='+quoteParams.quote_id+'" style="padding-bottom:30px" frameBorder="0" height="100%" width="100%"></iframe>');
+                var frame = $('<iframe src="'+urlLocation+'webposvantiv/index/redirect?guestemail=null&quoteId='+quoteParams.quote_id+'" style="padding-bottom:30px" frameBorder="0" height="100%" width="100%"></iframe>');
                 self.loading(true);
 
                 $('#vantiv-iframe').append(frame);
                 frame.load(function(){
                     self.loading(false);
                 });
-
-                // var quoteParams = CartModel.getQuoteInitParams();
-                // var payload = {
-                //     cartId: quoteParams.quote_id,
-                //     method: {method:'mercuryhosted',additional_data:null, po_number:null}
-                // };
-                // var serviceUrl = '';
-                // if(quoteParams.customer_id == 0){
-                //     serviceUrl = self.createUrl('/guest-carts/:cartId/selected-payment-method',{cartId:quoteParams.quote_id});
-                //
-                // }else{
-                //     serviceUrl = self.createUrl('/carts/mine/selected-payment-method', {});
-                // }
-                //
-                // storage.put(
-                //     serviceUrl, JSON.stringify(payload)
-                // ).done(
-                //     function () {
-                //         var frame = $('<iframe src="http://127.0.0.1/vantiv/webposvantiv/index/redirect?guestemail=null&quoteId='+quoteParams.quote_id+'" style="padding-bottom:30px" frameBorder="0" height="100%" width="100%"></iframe>');
-                //
-                //         self.loading = true;
-                //         $('#vantiv-iframe').empty();
-                //         $('#vantiv-iframe').append(frame);
-                //         frame.load(function(){
-                //             self.loading = false;
-                //         });
-                //         // $.mage.redirect('http://127.0.0.1/vantiv/mercuryhosted/index/redirect?guestemail=' + quote.guestEmail);
-                //         // $.mage.redirect(window.checkoutConfig.payment.mercuryhosted.redirectUrl + '?guestemail=' + quote.guestEmail);
-                //     }
-                // ).fail(
-                //     function (response) {
-                //         console.log($.parseJSON(response.responseText));
-                //         // errorProcessor.process(response, messageContainer);
-                //         // fullScreenLoader.stopLoader();
-                //         self.closeAuthorizeWindow(false, $.parseJSON(response.responseText).message);
-                //     }
-                // );
-
-                // var quoteParams = CartModel.getQuoteInitParams();
-                // var windowpopup = self.openAuthorizeWindow('/vantiv/webposvantiv/index/redirect?guestemail=null&quoteId='+quoteParams.quote_id);
-                // windowpopup.onunload = function(){
-                //     setTimeout(function() {
-                //         console.log(windowpopup);
-                //         if(windowpopup.closed){
-                //             if(windowpopup.vantivSuccess){
-                //                 self.closeAuthorizeWindow(windowpopup.vantivSuccess);
-                //                 Event.dispatch('start_place_order', '');
-                //             }else{
-                //                 self.closeAuthorizeWindow(windowpopup.vantivSuccess);
-                //             }
-                //         }
-                //     }, 500);
-                //
-                // }
             },
 
             /**
